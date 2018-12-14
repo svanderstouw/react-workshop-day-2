@@ -77,3 +77,21 @@ module.exports = {
 ```
 
 This setup includes `postcss-imports` to modularize CSS files, `postcss-preset-env` for next generation CSS support, and `cssnano` for minification.
+
+## React
+
+To add React to this build, follow the instructions below:
+
+First, install `react` and `react-dom`: `yarn add react react-dom -S`.
+
+Next, install Babel support for React: `yarn add @babel/preset-react -D`
+
+Then, update the `.babelrc` configuration file to compile React and JSX:
+
+`.babelrc`
+
+```javascript
+{
+	"presets": ["@babel/preset-env", "@babel/preset-react"]
+}
+```
