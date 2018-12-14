@@ -19,3 +19,61 @@ Running `yarn start` will run your development server. This supports hot reloadi
 ### `yarn build`
 
 Running `yarn build` will create a production build of your application in the `dist` directory
+
+## Additional packages
+
+### PostCSS
+
+To add PostCss support to this build, follow the instructions below:
+
+First, install `postcss-loader` and dependencies: `yarn add postcss-loader postcss-import postcss-preset-env cssnano -D`
+
+Next, create a `postcss.config.js` configuration file in your project root: `touch postcss.config.js` and give it the following content:
+
+```javascript
+module.exports = {
+	parser: false,
+	plugins: {
+		'postcss-import': {},
+		'postcss-preset-env': {},
+		cssnano: {}
+	}
+}
+```
+
+Then, add the following line to your CSS rule in `webpack.config.js`: `'postcss-loader'`. Your `webpack.config.js` should now look like this:
+
+```javascript
+const path = require('path'),
+	HtmlWebpackPlugin = require('html-webpack-plugin')
+
+module.exports = {
+	entry: './src/index.js',
+	output: {
+		path: path.join(__dirname, 'dist'),
+		filename: 'index.bundle.js'
+	},
+	module: {
+		rules: [
+			{
+				test: /\.js$/,
+				exclude: /node_modules/,
+				use: {
+					loader: 'babel-loader'
+				}
+			},
+			{
+				test: /\.css$/,
+				use: ['style-loader', 'css-loader', 'postcss-loader']
+			}
+		]
+	},
+	plugins: [
+		new HtmlWebpackPlugin({
+			template: './src/index.html'
+		})
+	]
+}
+```
+
+This setup includes `postcss-imports` to modularize CSS files, `postcss-preset-env` for next generation CSS support, and `cssnano` for minification.
