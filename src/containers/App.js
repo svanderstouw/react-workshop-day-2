@@ -1,20 +1,33 @@
-import React, { Component } from 'react';
-import Headline from '../components/Headline/Headline'
- 
+import React, { Component } from 'react'
+
+import Counter from '../components/Counter'
+
 class App extends Component {
+  constructor() {
+    super()
+    this.state = { count: 0 }
+
+    // One way to scope 'this' properly
+    // this.increment = this.increment.bind(this)
+  }
+
+  // Corresponds to lines 8 & 9
+  // increment() {
+  //   this.setState({count: this.state.count + 1 })
+  // }
+
+  decrement = () => {
+    this.setState({count: this.state.count - 1 })
+  }
+  increment = () => {
+    this.setState({count: this.state.count + 1 })
+  }
   render() {
-    // const words = ['hello', 'these', 'are', 'some', 'words']
-    return (
-      <div>
-        <Headline isColor text={"Hello from props"}/>
-        <Headline isColor={false} text={"Blog post number 1"}/>
-        <Headline isColor text={"Some other headline"}/>
-        {/* <ul>
-            {words.map(word => <li>{word}</li>)}
-        </ul> */}
-        <p>This should not be styled...</p>
-      </div>
-    );
+    return <Counter
+              decrement={this.decrement} 
+              count={this.state.count}
+              increment={this.increment}
+            />
   }
 }
-export default App;
+export default App
